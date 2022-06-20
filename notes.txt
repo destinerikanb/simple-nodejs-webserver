@@ -1,0 +1,6 @@
+MEMBUAT PROJECT JAVASCRIPT
+- Inisialisasi package.json
+
+    npm init --y
+
+- kode --y berfungsi untuk menjawab pertanyaan-pertanyaan ynag diberikan NPM dengan nilai default
