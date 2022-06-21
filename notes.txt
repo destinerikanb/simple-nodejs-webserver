@@ -192,3 +192,33 @@ ROUTING REQUEST
         }
 
 RESPONSE STATUS
+- Response yang dibawa oleh server dibagi menjadi 3 bagian penting :
+    1. Status line/response status
+    2. Response header
+    3. Response body
+- Response status : Salah satu bagian dari response yang berisikan tentang infromasi apakah sebuah request berhasil/gagal dilakukan
+    1. Status code
+    2. Status message
+- Indikasi keberhasilan request client ditentukan oleh response status code yang dikirim oleh server.
+- Karena itu nilai status code tidak bisa sembarang kita tetapkan
+- Status code harus terdiri dari 3 digit angka dengan ketentuan sebagai berikut :
+    1. 100-199 : informational response
+    2. 200-299 : successfull response
+    3. 300-399 : redirect
+    4. 400-499 : client error
+    5. 500-599 : server error
+- Pada Node.js penetapan nilai status code pada response dilakukan melalui properti response.statusCode
+
+        const requestListener = (request, response) => {
+            response.statusCode = 404;
+        }
+
+- Status message memiliki nilai standar sesuai dengan status code. Namun kita bisa mengubahnya bila diperlukan.
+- Untuk mengubah status message kita bisa menggunakan properti response.statusMessage
+
+        const requestListener = (request, response) => {
+            response.statusCode = 404;
+            response.statusMessage = 'User is not found';
+        }
+
+- Sebaiknya jangan merubah status message bila tidak diperlukan
