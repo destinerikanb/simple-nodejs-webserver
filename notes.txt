@@ -4,3 +4,67 @@ MEMBUAT PROJECT JAVASCRIPT
     npm init --y
 
 - kode --y berfungsi untuk menjawab pertanyaan-pertanyaan ynag diberikan NPM dengan nilai default
+
+MEMBUAT HTTP SERVER
+- Node.js menyiapkan core modules http untuk membangun web SERVER
+    const http = require('http');
+
+- HTTP module memiliki banyak member seperti objek, properti, atau method yang berguna untuk melakukan hal-hal terkait protokol HTTP :
+    1. http.createServer() 
+        -> Berfungsi untuk membuat http server yang merupakan instance dari http.server
+        -> Method ini menerima 1 parameter custom callback yang digunakan sebagai request listener 
+        -> Berikut kode untuk menanggapi sebuah request listener
+
+                const http = require('http');
+
+                const requestListener = (request, response) => {
+
+                };
+
+                const server = http.createServer(requestListener);
+
+        -> Request listener memiliki 2 parameter :
+            1. request
+                > objek yang berisikan informasi terkait permintaan/request yang dikirim oleh client
+                > di dalam objek ini kita bisa melihat :
+                    - alamat yang diminta
+                    - data yang dikirim
+                    - HTTP method yang digunakan oleh client
+            2. response
+                > objek yang digunakan untuk menanggapi permintaan/request 
+                > Melalui objek ini kita bisa menentukan :
+                    - data yang diberikan
+                    - format dokumen yang digunakan
+                    - status code
+                    - informasi response lainnya
+
+                const requestListener = (request, response) => {
+                    response.setHeader('Content-Type', 'txt/html');
+                    response.statusCode = 200;
+                    response.end('<h1>Hello HTTP server!</h1>');
+                }
+
+    2. Methos listen()
+        -> Method agar server selalui sedia menangani permintaan yang masuk dari client
+        -> Setiap instance dari http.server juga memiliki method listen()
+        -> Method listen menerima 4 parameter :
+            1. port (number) : jalur yang digunakan untuk mengakses HTTP server
+            2. hostname (string) : nama domain yang digunakan oleh HTTP server
+            3. backlog (number) : maksimal koneksi yang dapat ditunda (pending) pada HTTP server
+            4. listeningListener (function) : callback yang akan terpanggil ketika HTTP server sedang bekerja (listening)
+        -> Keempat parameter di atas bersifat opsional.
+        -> Namun lazimnya, ketika memanggil method listen() kita memberikan nilai port, hostname, dan listeningListener.
+
+                const port = 5000;
+                const host = 'localhost';
+
+                server.listen(port, host, ()=>{
+                    console.log(`Server berjalan pada http://${host}:${port}`);
+                })
+
+- Latihan
+    1. Buat server dengan http.createServer
+    2. Gunakan method listen() agar server selalu siap sedia menangani request yang masuk
+    3. Jalankan server dengan npm start
+    4. Demo request dengan curl atau browser
+            curl -X GET http://localhost:5000/
