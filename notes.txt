@@ -68,3 +68,44 @@ MEMBUAT HTTP SERVER
     3. Jalankan server dengan npm start
     4. Demo request dengan curl atau browser
             curl -X GET http://localhost:5000/
+
+METHOD/VERB RREQUEST
+- Web Server yang telah kita buat sebelumnya belum mampu mengenali sepenuhnya request dari client
+- Hal tersebut terjadi karena kita belum menuliskan logika dalam menangani request dari method yang berbeda
+- Fungsi requestListener menyediakan 2 parameter request dan response.
+- Parameter request merupakan instance dari http.ClientRequest yang memiliki banyak properti di dalamnya
+- Melalui properti-properti ini kita dapat mengetahui seperti apa karakteristik dari HTTP request yang dilakukan oleh client
+- Seperti method yang digunakan, path yang dituju, data yang dikirimkan(bila ada), dll.
+- Gunakan properti request.method -> untuk mendapatkan nilai method 
+
+            const requestListener = (request, response) => {
+                const method = request.method;
+            } 
+
+- Atau kita bisa menggunakan cara yang lebih clean dengan menggunakan object destructuring :
+
+            const requestListener = (request, response) => {
+                const {method} = request;
+            }
+
+- Dengan memiliki nilai method, kita bisa memberikan response berbeda berdasarkan tipe methodnya
+
+            const requestListener = (request, response) => {
+                const {method} = request;
+            }
+
+            if(method === 'GET'){
+                //response ketika GET
+            }
+
+            if(method === 'POST'){
+                //response ketika POST
+            }
+
+            if(method === 'PUT'){
+                //response ketika PUT
+            }
+
+            if(method === 'DELETE'){
+                //response ketika DELETE
+            }
