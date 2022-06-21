@@ -109,3 +109,32 @@ METHOD/VERB RREQUEST
             if(method === 'DELETE'){
                 //response ketika DELETE
             }
+
+BODY REQUEST
+- Ketika client melakukan permintaan dengan method POST dan PUT, biasanya permintaan tersebut memiliki sebuah data yang disimpan pada body request.
+- Data pada body bisa berupa format teks, JSON, berkas gambar, atau format lainnya.
+- Data tersebut nantinya digunakan oleh server untuk diproses di database atau disimpan dalam bentuk objek utuh
+- http.ClientRequest merupakan turunan dari readable stream, yang dimana untuk mendapatkan data body akan sedikit sulit dibandingkan dengan mendapatkan data header
+- Data di body didapatkan dengan teknik stream, teknik ini memanfaatkan EventEmitter untuk mengirimkan bagian-bagian datanya.
+- Dalam kasus http.ClientRequest event data dan end lah yang digunakan untuk mendapatkan data body.
+- Contoh untuk mendapatkan data body :
+
+        const requestListener = (request, response) => {
+            let body = [];
+
+            request.on('data', (chunk)=>{
+                body.push(chunk)
+            });
+
+            request.end('end', ()=>{
+                body = Buffer.concat(body).toString();
+            });
+        };
+
+- Bedah kode :
+    1. Deklarasikan variabel body dan Inisialisasi dengan array kosong. Berfungsi untuk menampung buffer pada stream
+    2. Ketika event "data" terjadi pada request, kita isi array body dengan chunk(potongan data) yang dibawa callback function pada event tsb
+    3. Ketika proses stream berakhir, maka event end akan terbangkitkan.
+        Disinilah kita mengubah variabel body yang sebelumnya menampung buffer menjadi data sebenarnya dalam bentuk string
+        melalui perintah Buffer.concat(body).toString()
+        
