@@ -138,3 +138,57 @@ BODY REQUEST
         Disinilah kita mengubah variabel body yang sebelumnya menampung buffer menjadi data sebenarnya dalam bentuk string
         melalui perintah Buffer.concat(body).toString()
         
+ROUTING REQUEST
+- Ketika menangani request hal yang harus kita cek selain method adalah URL atau alamat yang dituju dari request tsb.
+- Routing merupakan istilah dalam menentukan respon server berdasarkan path atau url yang diminta oleh client
+- Dalam http.clientRequest, untuk mendapatkan URL sangat mudah :
+
+        const requestListener = (request, response) => {
+            const {url} = request;
+        }
+
+- Properti URL akan mengembalikan nilai path secara lengkap tanpa host dan port yang digunakan server.
+- Contoh : http://localhost:5000/about -> url = '/about'
+- Dengan mendapatkan url, kita dapat merespon client sesuai dengan path yang ia minta.
+
+        const requestListener = (request, response) => {
+            const {url} = request;
+
+            if(url === '/'){
+                // curl http://localhost:5000/about
+            }
+
+            //curl http://localhost:5000/<any>
+        }
+
+- Kita juga mengkombinasikan evaluasi dengan method request. Alhasil kita dapat menentukan respon lebih spesifik lagi
+
+        const requestListener = (request, response) => {
+            const {url, method} = request;
+
+            if(url === '/'){
+                if(method === 'GET'){
+                    //curl -X GET http://localhost:5000/
+                }
+
+                // curl -X <any> http://localhost:5000/
+            }
+
+            if(url === '/about') {
+                if(method === 'GET') {
+                    // curl -X GET http://localhost:5000/about
+                }
+ 
+                if(method === 'POST') {
+                    // curl -X POST http://localhost:5000/about
+                }
+ 
+                // curl -X <any> http://localhost:5000/about
+            }
+ 
+            // curl -X <any> http://localhost:5000/<any>
+        };
+
+        }
+
+RESPONSE STATUS
