@@ -222,3 +222,34 @@ RESPONSE STATUS
         }
 
 - Sebaiknya jangan merubah status message bila tidak diperlukan
+
+RESPONSE HEADER
+- Pada web server yang telah kita buat, ia memberikan respons dengan format dokumen HTML.
+- Dokumen ini digunakan oleh browser untuk menampilkan website.
+- Sebenarnya server dapat merespons dengan menggunakan data dalam tipe (MIME types) lain, seperti :
+    - XML,
+    - json
+    - Gambar 
+    - Atau sekedar teks biasa
+- Apapun MIME types yang digunakan, web server wajib memberi tahu pada client
+- Caranya, lampirkan properti 'Content-Type' dengan nilai MIME types yang disisipkan pada header response
+- Untuk menyisipkan nilai pada header response, gunakan method setHeader()
+
+        const requestListener = (request, response) => {
+            response.setHeader('Content-Type', 'text/html')
+        }
+
+- Kita bisa mendapatkan data dari header sebanyak yang kita inginkan 
+- Method setHeader() menerima 2 parameter :
+    - nama properti
+    - nilai
+
+        const requestListener = (request, response) => {
+            response.setHeader('Content-Type', 'text/html');
+            response.setHeader('X-Powered-By', 'NodeJS');
+        }
+
+- Jika kita menetapkan header dengan properti yang tidak standar atau kita membuat nama propertinya secara mandiri
+- Maka sangat disarankan untuk menambahkan huruf X di awal nama propertinya.
+- Properti header dituliskan secara proper case atau setiap kata diawali dengan huruf kapital dan setiap katanya dipisahkan oleh tanda garis (-)
+- karena server tidak lagi mengirimkan konten dalam bentuk HTML, maka browser tidak akan lagi menampilkan dalam bentuk HTML
