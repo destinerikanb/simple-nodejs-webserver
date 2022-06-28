@@ -253,3 +253,30 @@ RESPONSE HEADER
 - Maka sangat disarankan untuk menambahkan huruf X di awal nama propertinya.
 - Properti header dituliskan secara proper case atau setiap kata diawali dengan huruf kapital dan setiap katanya dipisahkan oleh tanda garis (-)
 - karena server tidak lagi mengirimkan konten dalam bentuk HTML, maka browser tidak akan lagi menampilkan dalam bentuk HTML
+
+RESPONSE BODY
+- Header response menampung informasi terkait response yang diberikan oleh server.
+- Informasi dapat berupa status respons, MIME types, tanggal, atau informasi lainnya yang mungkin dibutuhkan oleh client. 
+- Tidak semua informasi cocok disimpan di header.
+- Informasi pada header hanya sebagai metadata atau informasi yang menjelaskan tentang sebuah data lain (data utama).
+- Selain header, http response juga membawa body, disini data utama/konten disimpan.
+- Objek response yang ada pada parameter requestListener adalah instance dari http.serverResponse 
+- Dimana ia merupakan writeable stream
+- Untuk menuliskan data pada respons kita bisa menggunakan method response.Write() dan diakhiri dengan response.end()
+
+        const requestListener = (request, response) => {
+            response.write('<html>');
+            response.write('<body>');
+            response.write('<h1>Hello, World!</h1>');
+            response.write('</body>');
+            response.write('</html>');
+            response.end();
+        }
+
+- Method end() pada writeable stream dapat digunakan untuk menulis data terakhir sebelum proses penulisan diakhiri
+
+        const requestListener = (request, response) => {
+            response.end('<html><body><h1>Hello, World!</h1></body></html>');
+        };
+
+- Penting untuk menuliskan response status dan header sebelum menuliskan data pada response body
